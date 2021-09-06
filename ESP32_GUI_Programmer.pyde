@@ -271,7 +271,7 @@ def serve(remoteAddr, localAddr, remotePort, localPort, password, filename, comm
 add_library('controlP5')
 
 fileToUpload = ""
-ipAddressText = "192.168.1.100"#default ip address
+ipAddressText = ""#default ip address
 
 
 
@@ -300,6 +300,20 @@ def setup():
     .setLabel("esp32 ip address")\
     .setColorLabel(color(0))\
     
+        #INPUT PASSWORD TEXT FIELD
+    cp5.addTextfield("PASS")\
+    .setPosition(370, 50)\
+    .setSize(100, 40)\
+    .setFont(font20)\
+    .setFocus(True)\
+    .setColor(color(0))\
+    .setColorBackground(color(255))\
+    .setColorCursor(color(0))\
+    .setText("")\
+    .setAutoClear(False)\
+    .setLabel("PASSWORD")\
+    .setColorLabel(color(0))\
+    
     
     #UPLOAD BUTTON
     cp5.addButton("Upload")\
@@ -323,7 +337,8 @@ def runServer():
     myPort = random.randint(10000,60000)
     global ipAddressText
     ipAddressText = cp5.get(Textfield, "inputIP").getText()
-    serve(ipAddressText, "0.0.0.0", 3232, myPort, "",fileToUpload, FLASH)
+    passwordText=cp5.get(Textfield,"PASS").getText()
+    serve(ipAddressText, "0.0.0.0", 3232, myPort, passwordText,fileToUpload, FLASH)
 
 def fileSelected(selection):
     if selection == None:
